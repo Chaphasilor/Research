@@ -12,19 +12,21 @@ function Socket(secure = false, domain, port = 80, path = "") {
 
 self.addEventListener('install', function(event) {
   // Perform install steps
-  Socket(false, "192.168.2.129", 42069, "socket")
-  .then((socket) => {
-    console.log("Socket opened");
-    displayNotification("Socket opened");
-    socket.onmessage = (message) => {
-      console.log(message.data);
-      displayNotification(message.data);
-    }
-  })
-  .catch(() => {
-    console.error("Socket could NOT be opened!");
-    displayNotification("Socket could NOT be opened!");
-  });
+  setTimeout(function() {
+    Socket(false, "192.168.2.129", 42069, "socket")
+    .then((socket) => {
+      console.log("Socket opened");
+      displayNotification("Socket opened");
+      socket.onmessage = (message) => {
+        console.log(message.data);
+        displayNotification(message.data);
+      }
+    })
+    .catch(() => {
+      console.error("Socket could NOT be opened!");
+      displayNotification("Socket could NOT be opened!");
+    });
+  }, 3000);
   
 });
 
