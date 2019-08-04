@@ -12,25 +12,19 @@ function Socket(secure = false, domain, port = 80, path = "") {
 
 self.addEventListener('install', function(event) {
   // Perform install steps
-  // 
-  setTimeout(function() {
-    displayNotification("Test");
-  }, 5000);
-  setTimeout(function() {
-    Socket(false, "192.168.2.129", 42069, "socket")
-    .then((socket) => {
-      console.log("Socket opened");
-      displayNotification("Socket opened");
-      socket.onmessage = (message) => {
-        console.log(message.data);
-        displayNotification(message.data);
-      }
-    })
-    .catch(() => {
-      console.error("Socket could NOT be opened!");
-      displayNotification("Socket could NOT be opened!");
-    });
-  }, 3000);
+  Socket(false, "192.168.2.129", 42069, "socket")
+  .then((socket) => {
+    console.log("Socket opened");
+    displayNotification("Socket opened");
+    socket.onmessage = (message) => {
+      console.log(message.data);
+      displayNotification(message.data);
+    }
+  })
+  .catch(() => {
+    console.error("Socket could NOT be opened!");
+    displayNotification("Socket could NOT be opened!");
+  });
   
 });
 
@@ -102,7 +96,7 @@ self.addEventListener('notificationclick', function(e) {
     notification.close();
     // clients.openWindow('https://synnrekt.000webhostapp.com/dance/');
 
-    const rootURL = new URL('/dance/', self.location.origin).href;
+    const rootURL = new URL('/', self.location.origin).href;
     console.log(rootURL);
 
     const promiseChain = clients.matchAll({
