@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Audio test</title>
+  </head>
+  <body>
+
+    <audio id='player' controls>
+      <source src="WW.mp3" type="audio/mpeg">
+    </audio>
+
+    <button type="button" onclick="context.resume();">Play</button>
+
+    <script type="text/javascript">
+
+      // document.querySelector("#player").addEventListener('timeupdate', function(){
+      //           var buffer = .28;
+      //           if(this.currentTime > this.duration - buffer){
+      //               this.currentTime = 0
+      //               this.play()
+      //               console.log("test");
+      //           }}, false);
+
+      // var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // var myAudio = document.querySelector('#player');
+      //
+      // // Create a MediaElementAudioSourceNode
+      // // Feed the HTMLMediaElement into it
+      // var source = audioCtx.createMediaElementSource(myAudio);
+      // audioCtx.loop = true;
+      //
+      // // connect the AudioBufferSourceNode to the destination,
+      // // so we can play the music
+      // source.connect(audioCtx.destination);
+
+
+      //this is the webaudio loooooppppppp
+      //enter url in the next line
+      var url  = 'WW.mp3';
+
+      /* --- set up web audio --- */
+      //create the context
+      var context = new AudioContext();
+      //...and the source
+      var source = context.createBufferSource();
+      //connect it to the destination so you can hear it.
+      source.connect(context.destination);
+
+      /* --- load buffer ---  */
+      var request = new XMLHttpRequest();
+      //open the request
+      request.open('GET', url, true);
+      //webaudio paramaters
+      request.responseType = 'arraybuffer';
+      //Once the request has completed... do this
+      request.onload = function() {
+          context.decodeAudioData(request.response, function(response) {
+              /* --- play the sound AFTER the buffer loaded --- */
+              //set the buffer to the response we just received.
+              source.buffer = response;
+              //start(0) should play asap.
+              source.start(0);
+              source.loop = true;
+              source.loopStart = 0;
+              source.loopEnd = 8.225;
+          }, function () { console.error('The request failed.'); } );
+      }
+      //Now that the request has been defined, actually make the request. (send it)
+      request.send();
+
+    </script>
+
+  </body>
+</html>

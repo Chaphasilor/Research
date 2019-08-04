@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="slides.css">
+
+        <title>Slides</title>
+
+    </head>
+    <body>
+
+        <script type="text/javascript">
+
+            // var slides = document.getElementsByClassName('slide');
+            //
+            // for (var i = 0; i < slides.length; i++) {
+            //
+            //     slides[i].addEventListener('click', nextSlide, false);
+            //
+            // }
+            //
+            // function nextSlide() {
+            //
+            //     this.className += ' hidden';
+            //
+            // }
+
+            var currentSlide = 0;
+
+            var lastSlide = -1;
+
+            var slides = document.getElementsByTagName('article');
+
+            window.onload = function() {
+                for (var i = 0; i < slides.length; i++) {
+
+                    lastSlide++;
+
+                }
+
+                for (var i = 0; i <= lastSlide; i++) {
+
+                    slides[lastSlide-i].style = "z-index:"+(i);
+
+                }
+            }
+
+
+            function nextSlide() {
+
+                if (currentSlide != lastSlide) {
+
+                    var slide = slides[currentSlide];
+
+                    slide.className += ' hidden';
+
+                    currentSlide++;
+
+                    if (currentSlide == 1) {
+
+                        document.getElementById('previousSlide').style = '';
+
+                    } else if (currentSlide == lastSlide) {
+
+                        document.getElementById('nextSlide').style = 'display:none;';
+
+                    };
+
+                }
+
+            };
+
+            function previousSlide() {
+
+                if (currentSlide != 0) {
+
+                    var slide = slides[currentSlide-1];
+
+                    slide.className = '';
+
+                    currentSlide--;
+
+                    if (currentSlide == 0) {
+
+                        document.getElementById('previousSlide').style = 'display:none;';
+
+                    } else if (currentSlide == lastSlide-1) {
+
+                        document.getElementById('nextSlide').style = '';
+
+                    }
+
+                }
+
+
+            };
+
+
+            window.addEventListener("keydown", checkKeyPressed, false);
+
+            function checkKeyPressed(e) {
+
+                if (e.keyCode == "40") {
+
+                    nextSlide();
+
+                } else if (e.keyCode == "38") {
+
+                    previousSlide();
+
+                }
+
+            };
+
+
+            window.addEventListener('wheel', getsScrolled, false);
+
+            function getsScrolled(e) {
+
+                if (e.deltaY > 0) {
+
+                    nextSlide();
+
+                } else if (e.deltaY < 0) {
+
+                    previousSlide();
+
+                }
+
+            }
+
+        </script>
+
+        <a id='previousSlide' style='display:none;' class='navigation' onclick='previousSlide();'></a>
+
+        <article>
+            <h1>1</h1>
+        </article>
+
+        <article>
+            <h1>2</h1>
+        </article>
+
+        <article>
+            <h1>3</h1>
+        </article>
+
+        <article>
+            <h1>4</h1>
+        </article>
+
+        <article>
+            <h1>5</h1>
+        </article>
+
+        <article>
+            <h1>6</h1>
+        </article>
+
+        <a id='nextSlide' class='navigation' onclick='nextSlide();'></a>
+
+        <div id='progress'>
+
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+
+        </div>
+
+    </body
+</html>

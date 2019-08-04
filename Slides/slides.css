@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+article {
+    position: fixed;
+    top: 0%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    /*background: linear-gradient(to bottom, #b2ff59, #ccff90);*/
+    background: linear-gradient(135deg, #fc32d7 0%,#2989d8 50%,#207cca 51%,#f73bf4 100%);
+    transition-duration: .7s;
+    transition-timing-function: ease-in-out;
+}
+
+article h1 {
+    margin: auto;
+    padding: 0;
+    padding-top: 5%;
+    max-width: 50%;
+    text-align: center;
+}
+
+article.hidden {
+    top: -100%;
+}
+
+.navigation {
+    display: block;
+    z-index: 100;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    position: absolute;
+    left: 48%;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transition-duration: .5s;
+}
+
+.navigation:hover {
+    background-color: #684ADF;
+}
+
+#nextSlide {
+    bottom: 1.5%;
+    background-image: url('media/ArrowDownCircle.png');
+}
+
+#previousSlide {
+    top: 1.5%;
+    background-image: url('media/ArrowUpCircle.png');
+}
+
+div#progress {
+    border: 3px dashed grey;
+    width: 45%;
+    height: 3%;
+    position: fixed;
+    top: 48%;
+    left: -20%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    transform: rotate(90deg);
+    overflow: visible;
+}
+
+div#progress div {
+    display: block;
+    width: 2%;
+    height: 80%;
+    margin-left: 10%;
+    border-radius: 50%;
+    z-index: inherit;
+    background-color: black;
+}

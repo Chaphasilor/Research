@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>WebSockets</title>
+    
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+      if ('serviceWorker' in navigator) {
+        document.body.innerHTML = "Registering...";
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            document.body.innerHTML = "Success";
+            
+            requestNotifications();
+
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+            document.body.innerHTML = "Fail";
+          });
+        });
+      } else {
+        document.body.innerHTML = "ServiceWorkers not available";
+      }
+      
+      function requestNotifications() {
+        if ('Notification' in window && navigator.serviceWorker) {
+          Notification.requestPermission(function(status) {
+            console.log('Notification permission status:', status);
+            if (Notification.permission == 'granted') {
+      
+              console.log('Notifications are enabled');
+      
+              return true;
+      
+            } else {
+              return false;
+            }
+          });
+        }
+      }
+      
+    </script>
+    
+  </body>
+</html>

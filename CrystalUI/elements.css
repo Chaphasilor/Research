@@ -1,0 +1,33 @@
+button {
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover {
+  shape-outside: circle();
+  box-shadow: 1px 1px 3px 2px var(--color-shadow) inset;
+}
+
+button.light {
+  background: var(--gradient-light-action);
+}
+
+button.dark {
+  /* TODO */
+}
+
+button.small {
+  width: 3rem;
+  height: 3rem;
+}
+
+button.mid {
+  width: 5rem;
+  height: 5rem;
+}
+
+button.large {
+  width: 7rem;
+  height: 7rem;
+}

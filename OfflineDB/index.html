@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <title>offlineDB</title>
+
+    <style media="screen">
+      body {
+        background-color: black;
+        color: white;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <input id='storeName' type="text" />
+    <input id='keyName' type="text" />
+    <button id='requestButton' type="button">Add to queue</button>
+
+    <script type="text/javascript" src="db.js"></script>
+
+    <script type="text/javascript">
+
+      var swRegistration;
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            swRegistration = registration;
+
+            // if ('Notification' in window && navigator.serviceWorker) {
+            //   Notification.requestPermission(function(status) {
+            //     console.log('Notification permission status:', status);
+            //     if (Notification.permission == 'granted') {
+            //
+            //       // displayNotification();
+            //       console.log('Notifications are enabled');
+            //
+            //     }
+            //   });
+            // }
+
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+
+      document.querySelector('#requestButton').addEventListener('click', function() {
+
+        addToQueue(document.querySelector('#storeName').value, document.querySelector('#keyName').value);
+
+        swRegistration.sync.register('queue').then(() => {
+            console.log('Sync registered');
+        });
+
+      });
+
+    </script>
+
+  </body>
+</html>

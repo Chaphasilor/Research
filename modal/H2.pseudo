@@ -1,0 +1,48 @@
+a)
+FIND-MODAL-TURNING-POINT(a):
+    return FIND-MODAL-TURNING-POINT-REC(a, 0, a.length-1)
+
+FIND-MODAL-TURNING-POINT-REC(a, startIndex, endIndex):
+    if startIndex = endIndex
+        return a[startIndex]
+    i <- round((endIndex-startIndex)/2)+startIndex
+    if a[i] < a[i+1]
+        if ((i=startIndex) OR (a[i-1] < a[i] AND a[i] > a[i+1]))
+            return a[i]
+        return FIND-MODAL-TURNING-POINT-REC(a, i+1, endIndex)
+    else
+        if ((i=startIndex AND i=endIndex-1) OR (a[i-1] < a[i] AND a[i] > a[i+1]))
+            return a[i]
+        return FIND-MODAL-TURNING-POINT-REC(a, startIndex, i)
+        
+b)
+FIND-LARGEST-X(v, w):
+    index <- FIND-LARGEST-X-REC(v, 0, v-length-1)
+    return [v[index], w[index]]
+
+FIND-LARGEST-X-REC(v, startIndex, endIndex):
+    i <- round((endIndex-startIndex)/2)+startIndex
+    if v[i] < v[i+1]
+        return FIND-LARGEST-X-REC(v, i, endIndex)
+    else if v[i] > v[i+1]
+        if (v[i] > v[i-1])
+            return i
+        return FIND-LARGEST-X-REC(v, startIndex, i)
+    else
+        return i
+        
+c)
+FIND-LARGEST-Y(v, w):
+    index <- FIND-LARGEST-Y-REC(w, 0, w-length-1)
+    return [v[index], w[index]]
+
+FIND-LARGEST-Y-REC(w, startIndex, endIndex):
+    i <- round((endIndex-startIndex)/2)+startIndex
+    if w[i] < w[i+1]
+        return FIND-LARGEST-Y-REC(w, i, endIndex)
+    else if w[i] > w[i+1]
+        if (w[i] > w[i-1])
+            return i
+        return FIND-LARGEST-Y-REC(w, startIndex, i)
+    else
+        return i

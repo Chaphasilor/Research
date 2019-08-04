@@ -1,0 +1,40 @@
+@keyframes spinning {
+  from {transform: translateX(-50%) rotate(0deg);}
+  /* 50% {transform: translateX(-50%) rotate(360deg);} */
+  to {transform: translateX(-50%) rotate(360deg);}
+}
+
+#pageLoadingSpinner {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  width: 3vw;
+  height: 3vw;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: none;
+}
+
+#pageLoadingSpinner.spinning {
+  display: block;
+}
+
+.circle {
+  position: absolute;
+  display: block;
+  top: .5vw;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 100%;
+  border: 2px solid cyan;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.dot {
+  width: 1vw;
+  height: 1vw;
+  border-radius: 100%;
+  background-color: cyan;
+}
+
+#pageLoadingSpinner.spinning .circle {animation: spinning 1s linear 0s infinite;}

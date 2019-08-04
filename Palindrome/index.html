@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Palindrome</title>
+    
+  </head>
+  <body>
+  
+      <p>Algorithm returns the minimum amount of sub-words needed to divide a given word in palindromes.</p>
+      
+      <form onsubmit="event.preventDefault();">
+        <input id="word" type="text" name="word" value="" placeholder="Input Word">
+        <button type="submit" onclick="document.querySelector('#output').innerHTML = minPalPartion(document.querySelector('#word').value);">Check</button>
+      </form>
+      
+      <br>
+      
+      <span id="output"></span>
+    
+      <script src="palindrome.js" charset="utf-8"></script>
+    
+  </body>
+</html>

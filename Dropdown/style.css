@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown {
+    display: inline-block;
+    width: 15%;
+    /*max-height: 7%;*/
+    background-color: cyan;
+    overflow: hidden;
+    font-family: sans-serif;
+    /*transition: max-height .5s ease-in-out;*/
+}
+
+.dropdown input {
+    display: none;
+}
+
+.dropdown label {
+    display: block;
+    width: 100%;
+    font-size: 150%;
+    text-align: center;
+    padding-top: .35em;
+    padding-bottom: .5em;
+    transition: color .1s ease-out;
+    cursor: pointer;
+}
+
+.dropdown.extended label:hover {
+    color: white;
+    transition: color .1s ease-out;
+}
+
+/*.dropdown:hover {
+    max-height: 100%;
+}
+
+.dropdown:active {
+    max-height: 7%;
+}*/

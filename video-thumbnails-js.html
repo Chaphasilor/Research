@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+
+body {
+	margin: 0;
+}
+
+#video-demo-container {
+	width: 400px;
+	margin: 40px auto;
+}
+
+video {
+	display: none;
+	max-width: 400px;
+}
+
+img {
+  width: 400px;
+  height: 225px;
+}
+
+#thumbnail-container {
+	display: none;
+}
+
+#get-thumbnail {
+	display: none;
+}
+
+#video-canvas {
+	display: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="video-demo-container">
+	<video id="video1" controls>
+		<source src='videos/Milch.mp4' type="video/mp4">
+	</video>
+	<video id="video2" controls>
+		<source src='videos/kuh.mp4' type="video/mp4">
+	</video>
+	<canvas id="video-canvas"></canvas>
+</div>
+
+
+<script>
+
+var _CANVAS = document.querySelector("#video-canvas"),
+    _CTX = _CANVAS.getContext("2d");
+
+function createThumb(targetVid) {
+
+  var _VIDEO = targetVid;
+
+
+  // Load the video and show it
+  _VIDEO.style.display = 'none';
+
+  // Load metadata of the video to get video duration and dimensions
+  // _VIDEO.addEventListener('loadedmetadata', function() {
+
+  // Set canvas dimensions same as video dimensions
+  _CANVAS.width = _VIDEO.videoWidth;
+  _CANVAS.height = _VIDEO.videoHeight;
+
+  _VIDEO.currentTime = 30;
+
+  _VIDEO.addEventListener('canplay', function() {displayThumb(_VIDEO);});
+
+}
+
+function displayThumb(_VIDEO) {
+
+  _CTX.drawImage(_VIDEO, 0, 0, _VIDEO.videoWidth, _VIDEO.videoHeight);
+  // document.querySelector("#thumb").setAttribute('src', _CANVAS.toDataURL());
+  var img = document.createElement("img");
+  img.setAttribute('src', _CANVAS.toDataURL());
+  document.querySelector("#video-demo-container").appendChild(img);
+
+}
+
+</script>
+
+</body>
+</html>

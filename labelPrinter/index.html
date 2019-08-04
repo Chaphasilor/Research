@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dropdown2.css">
+    
+    <title>Label Printer</title>
+    
+  </head>
+  <body>
+    
+    <h1>Label Printer</h1>
+    <br>
+    <div class="dropdown" callback="showSelectedForm()">
+      <input type="radio" name="selection" value="single" checked>
+      <label for="selection">Single</label>
+      <input type="radio" name="selection" value="batch">
+      <label for="selection">Batch</label>
+      <input type="radio" name="selection" value="qr">
+      <label for="selection">QR</label>
+    </div>
+    <br>
+    <form id="single" method="post" onsubmit="event.preventDefault();">
+        
+        <label for="text">Text:</label>
+        <input type="text" name="text" maxlength="4" size="7">
+        
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" value="1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="" onclick="printLabel(document.getElementsByName('text')[0].value, document.getElementsByName('amount')[0].value);" value="Print!">
+        
+    </form>
+
+    <form id="batch" method="post" onsubmit="event.preventDefault();">
+        
+        <label for="from">From:</label>
+        <input type="number" name="from">
+        <br>
+        <label for="to">To:</label>
+        <input type="number" name="to">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="" onclick="generateIDs(document.getElementsByName('to')[0].value, document.getElementsByName('from')[0].value);" value="Print!">
+      
+    </form>
+
+    <form id="qr" method="post" onsubmit="event.preventDefault();">
+        
+        <label for="qrData">Data:</label>
+        <textarea name="qrData" rows="5" cols="45"></textarea>
+        
+        <label for="qrAmount">Amount:</label>
+        <input type="number" name="qrAmount" value="1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="" onclick="printQRCode(document.getElementsByName('qrData')[0].value, document.getElementsByName('qrAmount')[0].value);" value="Print!">
+        
+    </form>
+    
+    <script src="js/printer.js" charset="utf-8"></script>
+    <script src="js/dropdown2.js" charset="utf-8"></script>
+    
+    <script type="text/javascript">
+    
+      window.onload = function() {
+        showSelectedForm();
+      }
+      
+      function showSelectedForm() {
+        let forms = document.querySelectorAll('form');
+        for (let n = 0; n < forms.length; n++) {
+          forms[n].style.display = "none";
+        }
+        let id = document.querySelector('input[type=radio]:checked').value;
+        document.querySelector('form#'+id).style.display = "block";
+        console.log("Showing " + id);
+      }
+      
+    </script>
+    
+  </body>
+</html>
