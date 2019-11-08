@@ -1,6 +1,6 @@
 m m
 J
-S l1;0.0,0.0,9.53,13.0,9.53
+S l1;0.0,0.0,10,13,10
 O R
-T 0.1,6.0,0,7,pt;  ds
+B 1,1,0,QRCODE+EL1,0.3;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 A 1

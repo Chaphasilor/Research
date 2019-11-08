@@ -27,8 +27,7 @@
     <form id="single" method="post" onsubmit="event.preventDefault();">
         
         <label for="text">Text:</label>
-        <!-- <input type="text" name="text" maxlength="4" size="7"> -->
-        <textarea id='taInput' style="resize:none;" name="text" cols="5" rows="3"></textarea>
+        <input type="text" name="text" maxlength="4" size="7">
         
         <label for="amount">Amount:</label>
         <input type="number" name="amount" value="1">
@@ -58,7 +57,7 @@
     <form id="qr" method="post" onsubmit="event.preventDefault();">
         
         <label for="qrData">Data:</label>
-        <textarea name="qrData" rows="5" cols="45" placeholder="max. ~50 characters"></textarea>
+        <textarea name="qrData" rows="5" cols="45"></textarea>
         
         <label for="qrAmount">Amount:</label>
         <input type="number" name="qrAmount" value="1">
@@ -77,30 +76,6 @@
     
       window.onload = function() {
         showSelectedForm();
-
-        document.querySelector('#taInput').onkeypress = (e => { // only catch printable keys
-
-            if (e.keyCode==13) {
-
-                if (e.target.value.split('\n').length >= 3) {
-                    console.log('Only three lines allowed!');
-                    alert('Only three lines allowed!');
-                    e.preventDefault();
-                    return false;
-                }
-
-            } else {
-                    let lastLine = e.target.value.split('\n').pop();
-
-                    if (lastLine.length >= 5) {
-                        console.log('Max. 5 characters per line!');
-                        alert('Max. 5 characters per line!')
-                        e.preventDefault();
-                        return false;
-                    }
-                }
-        })
-        
       }
       
       function showSelectedForm() {

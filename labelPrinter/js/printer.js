@@ -4,7 +4,7 @@ function printLabel(text, amount) {
     amount = 1;
   }
   
-  createPrintJob(text, amount, 11).then(_ => {
+  createPrintJob(text, amount, 8).then(_ => {
     uploadPrintJob()
     .catch(err => alert(err));  
   }
@@ -49,6 +49,11 @@ function printQRCode(text, amount) {
 
 function createPrintJob(text, amount, fontSize) {
   return new Promise(function(resolve, reject) {
+
+    lineArray = text.split("\n");
+    console.log('lineArray:', lineArray);
+    text = escape(lineArray.join('|'));
+    console.log('text:', text);
     
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
@@ -91,6 +96,8 @@ function createBatchPrintJob(lastID, firstID, fontSize) {
 
 function createQRPrintJob(text, amount) {
   return new Promise(function(resolve, reject) {
+
+    text = escape(text);
     
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {

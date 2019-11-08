@@ -26,18 +26,28 @@ if (!empty($_GET["fontSize"])) {
   $fontSize = $_GET["fontSize"];
 }
 
-$myFile = fopen("job.printjob", 'w');
+$file = fopen("job.printjob", 'w');
 
-fwrite($myFile,
+$lines = explode('|', $text);
+
+fwrite($file,
 "m m
 J
-S l1;0.0,0.0,10,13.0,10
+S l1;0.0,0.0,10,13,10
 O R
-T ".strval(1+(1.2*(4-strlen($text)))).",6.2,0,596,pt".$fontSize.";".$text."
-A ".$amount."
 ");
 
-fclose($myFile);
+for ($i=0; $i < count($lines); $i++) { 
+  fwrite($file,
+  "T 1,".(3*($i+1)).",0,596,pt".$fontSize.";".$lines[$i]."
+  ");
+}
+
+fwrite($file, 
+  "A ".$amount."
+");
+
+fclose($file);
 
 echo "Success";
 
