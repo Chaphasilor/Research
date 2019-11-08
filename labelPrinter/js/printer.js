@@ -51,8 +51,11 @@ function createPrintJob(text, amount, fontSize) {
   return new Promise(function(resolve, reject) {
 
     lineArray = text.split("\n");
+    for (const o in lineArray) {
+      lineArray[o] = escape(lineArray[o]);
+    }
     console.log('lineArray:', lineArray);
-    text = escape(lineArray.join('|'));
+    text = lineArray.join('|');
     console.log('text:', text);
     
     let xhttp = new XMLHttpRequest();
