@@ -34,7 +34,7 @@ for ($i=$minValue; $i <= $maxValue; $i++) {
   J
   S l1;0.0,0.0,9.53,13.0,9.53
   O R
-  T 0.1,6.0,0,5,pt".$fontSize.";".$i."
+  T 1,6.0,0,5,pt".$fontSize.";".$i."
   A 1
   
   ", FILE_APPEND);

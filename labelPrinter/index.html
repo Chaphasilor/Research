@@ -20,8 +20,14 @@
       <label for="selection">Single</label>
       <input type="radio" name="selection" value="batch">
       <label for="selection">Batch</label>
+      <input type="radio" name="selection" value="batchWithText">
+      <label for="selection">Batch with text</label>
       <input type="radio" name="selection" value="qr">
       <label for="selection">QR</label>
+      <input type="radio" name="selection" value="qrWithText">
+      <label for="selection">QR with Text</label>
+      <input type="radio" name="selection" value="qrApfel">
+      <label for="selection">QR Apfel</label>
     </div>
     <br>
     <form id="single" method="post" onsubmit="event.preventDefault();">
@@ -51,7 +57,31 @@
         <br>
         <br>
         <br>
-        <input type="submit" name="" onclick="generateIDs(document.getElementsByName('to')[0].value, document.getElementsByName('from')[0].value);" value="Print!">
+        <input type="submit" name="" onclick="generateIDs(document.querySelector('#batch [name=\'to\']').value, document.querySelector('#batch [name=\'from\']').value);" value="Print!">
+      
+    </form>
+
+    <form id="batchWithText" method="post" onsubmit="event.preventDefault();">
+        
+        <label for="from">From:</label>
+        <input type="number" name="from">
+        <br>
+        <label for="to">To:</label>
+        <input type="number" name="to">
+        <br>
+        <label for="digits"># of digits:</label>
+        <input type="number" name="digits">
+        <br>
+        <label for="text">Static text:</label>
+        <input type="text" name="text">
+        <br>
+        <label for="textFontSize">Text font size:</label>
+        <input type="number" name="textFontSize">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="" onclick="generateIDsWithText(document.querySelector('#batchWithText [name=\'to\']').value, document.querySelector('#batchWithText [name=\'from\']').value, document.querySelector('#batchWithText [name=\'digits\']').value, document.querySelector('#batchWithText [name=\'text\']').value, document.querySelector('#batchWithText [name=\'textFontSize\']').value);" value="Print!">
       
     </form>
 
@@ -66,9 +96,42 @@
         <br>
         <br>
         <br>
-        <input type="submit" name="" onclick="printQRCode(document.getElementsByName('qrData')[0].value, document.getElementsByName('qrAmount')[0].value);" value="Print!">
+        <input type="submit" name="" onclick="printQRCode(document.querySelector('#qr [name=\'qrData\']').value, document.querySelector('#qr [name=\'qrAmount\']').value);" value="Print!">
         
     </form>
+
+    <form id="qrWithText" method="post" onsubmit="event.preventDefault();">
+        
+        <label for="qrData">Data:</label>
+        <textarea name="qrData" rows="5" cols="45" placeholder="max. ~35 characters"></textarea>
+
+        <label for="qrText">Text:</label>
+        <textarea name="qrText" rows="5" cols="45" placeholder="max. ~10 characters"></textarea>
+        
+        <label for="qrAmount">Amount:</label>
+        <input type="number" name="qrAmount" value="1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="" onclick="printQRCodeWithText(document.querySelector('#qrWithText [name=\'qrData\']').value, document.querySelector('#qrWithText [name=\'qrText\']').value, document.querySelector('#qrWithText [name=\'qrAmount\']').value);" value="Print!">
+        
+    </form>
+
+    <!-- <form id="qrApfel" method="post" onsubmit="event.preventDefault();">
+        
+      <label for="qrData">Data:</label>
+      <textarea name="qrData" rows="5" cols="45" placeholder="max. ~50 characters"></textarea>
+      
+      <label for="qrAmount">Amount:</label>
+      <input type="number" name="qrAmount" value="1">
+      <br>
+      <br>
+      <br>
+      <br>
+      <input type="submit" name="" onclick="printQRCode(document.querySelector('#qrApfel [name=\'qrData\']').value, document.querySelector('#qrApfel [name=\'qrAmount\']').value, true);" value="Print!">
+      
+    </form> -->
     
     <script src="js/printer.js" charset="utf-8"></script>
     <script src="js/dropdown2.js" charset="utf-8"></script>

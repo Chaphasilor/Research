@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+	</head>
+	<body>
+
+		<input type="file" id="pictureTest" capture>
+		
+    <h2>Test Image Below</h2>
+		<h3>Files larger than ~60MB will not work!</h3>
+		<h4>Storage Used: <span id='quota'></span></h4>
+		<h4 id='status'></h4>
+
+		<input type="number" id="recordToLoad">	<button id="testImageBtn">Test</button>
+
+		<img id="testImage" height="500"> 
+		<video id="testVideo" height="500" controls>
+      <!-- <source id="testVideoSource" src="mov_bbb.mp4" type="video/mp4"> -->
+      <source id="testVideoSource" type="video/mp4">
+    </video>
+
+		<script>
+			let db;
+			let dbVersion = 1;
+			let dbReady = false;
+
+			document.addEventListener('DOMContentLoaded', () => {
+				console.log('dom content loaded');
+
+				document.querySelector('#pictureTest').addEventListener('change', doFile);
+
+				document.querySelector('#testImageBtn').addEventListener('click', doImageTest);
+
+				initDb();
+			});
+
+			function initDb() {
+				let request = indexedDB.open('testPics', dbVersion);
+
+				request.onerror = function(e) {
+					console.error('Unable to open database.');
+				}
+
+				request.onsuccess = function(e) {
+					db = e.target.result;
+					console.log('db opened');
+					navigator.storage.estimate().then(storage => {
+						document.querySelector('#quota').innerText = (storage.usage/storage.quota * 100).toFixed(2) + '%';
+					});
+				}
+
+				request.onupgradeneeded = function(e) {
+					let db = e.target.result;
+					db.createObjectStore('cachedForms', {keyPath:'id', autoIncrement: true});
+					dbReady = true;
+				}
+			}
+
+			function doFile(e) {
+				console.log('change event fired for input field');
+				let file = e.target.files[0];
+				var reader = new FileReader();
+				// reader.readAsDataURL(file);
+				// reader.readAsBinaryString(file);
+				reader.readAsArrayBuffer(file);
+
+				reader.onload = function(e) {
+					//alert(e.target.result);
+					let bits = e.target.result;
+					let ob = {
+						created:new Date(),
+						data:bits
+					};
+
+          console.log(ob);
+
+					let trans = db.transaction(['cachedForms'], 'readwrite');
+					let addReq = trans.objectStore('cachedForms').add(ob);
+
+					addReq.onerror = function(e) {
+						console.log('error storing data');
+						document.querySelector('#status').innerText = `Failed: ${e}`;
+						console.error(e);
+					}
+
+					trans.oncomplete = function(e) {
+						console.log('data stored');
+						document.querySelector('#status').innerText = "Stored!";
+						navigator.storage.estimate().then(storage => {
+							document.querySelector('#quota').innerText = (storage.usage/storage.quota * 100).toFixed(2) + '%';
+						});
+					}
+				}
+			}
+
+			function doImageTest() {
+				console.log('doImageTest');
+				let image = document.querySelector('#testImage');
+				let video = document.querySelector('#testVideo');
+				let videoSource = document.querySelector('#testVideoSource');
+        
+				let recordToLoad = parseInt(document.querySelector('#recordToLoad').value, 10);
+				if(recordToLoad === '') recordToLoad = 1;
+
+				let trans = db.transaction(['cachedForms'], 'readonly');
+				//hard coded id
+				let req = trans.objectStore('cachedForms').get(recordToLoad);
+				req.onsuccess = function(e) {
+
+          // Get window.URL object
+
+					// let binaryData = e.target.result;
+					let arrayBuffer = e.target.result.data;
+          console.log(arrayBuffer);
+          let blob = new Blob([arrayBuffer]);
+          console.log(blob);
+          let dataUrl = URL.createObjectURL(blob);
+          console.log(dataUrl);
+					image.src = dataUrl;
+					videoSource.src = dataUrl;
+          video.load();
+
+          image.onload = () => {
+            URL.revokeObjectURL(dataUrl);
+          }
+
+				}
+			}
+		</script>
+
+	</body>
+</html>

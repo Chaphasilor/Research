@@ -32,13 +32,57 @@ function generateIDs(lastID, firstID) {
   
 }
 
-function printQRCode(text, amount) {
+function generateIDsWithText(lastID, firstID, digitCount, text, textFontSize) {
+
+  console.log(lastID, firstID, digitCount, text, textFontSize);
+  
+  if (firstID == undefined) {
+    firstID = 1;
+  }
+  
+  if (checkWithin(firstID, -999, 9999) && (lastID, -999, 9999) && (lastID - firstID) > 0 && (lastID - firstID) < 500) {
+    if (digitCount > 4) {
+      alert("No more than 4 digits!");
+    } else {
+      createBatchPrintJobWithText(lastID, firstID, digitCount, text, 11, textFontSize).then(_ => {
+        uploadPrintJob()
+        .catch(err => alert(err));  
+      }
+      )
+      .catch(err => alert(err));
+    }
+  } else {
+    alert("ID Range not valid!");
+  }
+  
+}
+
+async function printQRCode(text, amount, apfel) {
   
   if (amount == undefined) {
     amount = 1;
   }
   
-  createQRPrintJob(text, amount).then(_ => {
+  try {
+
+    await createQRPrintJob(text, amount, apfel)
+    uploadPrintJob()
+
+  } catch (err) {
+    alert(err)
+  }
+  
+}
+
+function printQRCodeWithText(data, text, amount) {
+
+  console.log(data, text, amount);
+  
+  if (amount == undefined) {
+    amount = 1;
+  }
+  
+  createQRPrintJobWithText(data, text, amount).then(_ => {
     uploadPrintJob()
     .catch(err => alert(err));  
   }
@@ -97,7 +141,28 @@ function createBatchPrintJob(lastID, firstID, fontSize) {
   })
 }
 
-function createQRPrintJob(text, amount) {
+function createBatchPrintJobWithText(lastID, firstID, digitCount, text, fontSize, textFontSize) {
+  return new Promise(function(resolve, reject) {
+    
+    let xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (this.responseText != "Success") {
+          console.log(this.responseText);
+          reject("File could not be created!");
+        } else {
+          resolve();        
+        }
+    };
+    xhttp.onerror = function() {
+      reject("Something went wrong!")
+    }
+    xhttp.open("GET", "php/createBatchFileWithText.php?minValue="+firstID+"&maxValue="+lastID+"&digitCount="+digitCount+"&text="+text+"&fontSize="+fontSize+"&textFontSize="+textFontSize, true);
+    xhttp.send();
+    
+  })
+}
+
+function createQRPrintJob(text, amount, apfel) {
   return new Promise(function(resolve, reject) {
 
     text = escape(text);
@@ -114,7 +179,36 @@ function createQRPrintJob(text, amount) {
     xhttp.onerror = function() {
       reject("Something went wrong!")
     }
-    xhttp.open("GET", "php/createQRCodeFile.php?text="+text+"&amount="+amount, true);
+    if (apfel) {
+      xhttp.open("GET", "php/createQRCodeFileApfel.php?text="+text+"&amount="+amount, true);
+    } else {
+      xhttp.open("GET", "php/createQRCodeFile.php?text="+text+"&amount="+amount, true);
+    }
+    xhttp.send();
+    
+  })
+}
+
+function createQRPrintJobWithText(data, text, amount) {
+  return new Promise(function(resolve, reject) {
+
+    console.log(data, text, amount);
+
+    data = escape(data);
+    
+    let xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        if (this.responseText != "Success") {
+          console.log(this.responseText);
+          reject("File could not be created!");
+        } else {
+          resolve();        
+        }
+    };
+    xhttp.onerror = function() {
+      reject("Something went wrong!")
+    }
+    xhttp.open("GET", "php/createQRCodeFileWithText.php?data="+data+"&text="+text+"&amount="+amount, true);
     xhttp.send();
     
   })

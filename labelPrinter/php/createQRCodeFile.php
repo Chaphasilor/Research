@@ -26,7 +26,7 @@ fwrite($myFile,
 J
 S l1;0.0,0.0,10,13,10
 O R
-B 1,1,0,QRCODE+EL1,0.3;".$text."
+B 1.5,1.4,0,QRCODE+EL1,0.3;".$text."
 A ".$amount."
 ");
 
