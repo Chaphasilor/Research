@@ -13,16 +13,16 @@ function printLabel(text, amount) {
   
 }
 
-function generateIDs(lastID, firstID) {
+function generateIDs(lastID, firstID, trailing) {
   
   if (firstID == undefined) {
     firstID = 1;
   }
   
   if (checkWithin(firstID, -999, 9999) && (lastID, -999, 9999) && (lastID - firstID) > 0 && (lastID - firstID) < 500) {
-      createBatchPrintJob(lastID, firstID, 11).then(_ => {
-        uploadPrintJob()
-        .catch(err => alert(err));  
+      createBatchPrintJob(lastID, firstID, trailing, 11).then(_ => {
+        // uploadPrintJob()
+        // .catch(err => alert(err));  
       }
       )
       .catch(err => alert(err));
@@ -120,7 +120,7 @@ function createPrintJob(text, amount, fontSize) {
   })
 }
 
-function createBatchPrintJob(lastID, firstID, fontSize) {
+function createBatchPrintJob(lastID, firstID, trailing, fontSize) {
   return new Promise(function(resolve, reject) {
     
     let xhttp = new XMLHttpRequest();
@@ -135,7 +135,7 @@ function createBatchPrintJob(lastID, firstID, fontSize) {
     xhttp.onerror = function() {
       reject("Something went wrong!")
     }
-    xhttp.open("GET", "php/createBatchFile.php?minValue="+firstID+"&maxValue="+lastID+"&fontSize="+fontSize, true);
+    xhttp.open("GET", "php/createBatchFile.php?minValue="+firstID+"&maxValue="+lastID+"&trailing="+trailing+"&fontSize="+fontSize, true);
     xhttp.send();
     
   })

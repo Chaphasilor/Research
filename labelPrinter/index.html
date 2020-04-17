@@ -54,10 +54,13 @@
         <label for="to">To:</label>
         <input type="number" name="to">
         <br>
+        <label for="trailing">Trailing Text (behind the number):</label>
+        <input type="text" name="trailing" maxlength="4" size="4">
         <br>
         <br>
         <br>
-        <input type="submit" name="" onclick="generateIDs(document.querySelector('#batch [name=\'to\']').value, document.querySelector('#batch [name=\'from\']').value);" value="Print!">
+        <br>
+        <input type="submit" name="" onclick="generateIDs(document.querySelector('#batch [name=\'to\']').value, document.querySelector('#batch [name=\'from\']').value, document.querySelector('#batch [name=\'trailing\']').value);" value="Print!">
       
     </form>
 
@@ -72,7 +75,7 @@
         <label for="digits"># of digits:</label>
         <input type="number" name="digits">
         <br>
-        <label for="text">Static text:</label>
+        <label for="text">Static text (below the number):</label>
         <input type="text" name="text">
         <br>
         <label for="textFontSize">Text font size:</label>
