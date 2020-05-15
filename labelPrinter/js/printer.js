@@ -21,8 +21,8 @@ function generateIDs(lastID, firstID, trailing) {
   
   if (checkWithin(firstID, -999, 9999) && (lastID, -999, 9999) && (lastID - firstID) > 0 && (lastID - firstID) < 500) {
       createBatchPrintJob(lastID, firstID, trailing, 11).then(_ => {
-        // uploadPrintJob()
-        // .catch(err => alert(err));  
+        uploadPrintJob()
+        .catch(err => alert(err));  
       }
       )
       .catch(err => alert(err));

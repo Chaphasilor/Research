@@ -47,7 +47,7 @@ for ($i=$minValue; $i <= $maxValue; $i++) {
   J
   S l1;0.0,0.0,9.53,13.0,9.53
   O R
-  T 0.7,4.0,0,5,pt".$fontSize.";".str_pad($i, $digitCount, '0', STR_PAD_LEFT)."
+  T 0.7,4.0,0,7,pt".$fontSize.";".str_pad($i, $digitCount, '0', STR_PAD_LEFT)."
   T 0.7,8.0,0,5,pt".$textFontSize.";".$text."
   A 1
   
