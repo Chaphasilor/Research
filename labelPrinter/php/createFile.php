@@ -39,7 +39,7 @@ O R
 
 for ($i=0; $i < count($lines); $i++) { 
   fwrite($file,
-"T 1,".(3*($i+1)).",0,596,pt".$fontSize.";".$lines[$i]."
+"T 0.5,".(3*($i+1)).",0,5,pt".$fontSize.";".$lines[$i]."
 ");
 }
 

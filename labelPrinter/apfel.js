@@ -8,11 +8,17 @@ function barcodeCheckdigit(barcodeString) {
   return checkdigit;
 }
 
-async function printIds(start, end, static) {
+async function printApfel(start, end, static) {
+
+  console.log(`start:`, start);
+  console.log(`end:`, end);
+  console.log(`static:`, static);
 
   for (let i = start; i <= end; i++) {
     
-    let barcodeData = static + ('00000'+i).slice(-5);
+    let barcodeData = `${static} ${('00000'+i).slice(-5)}`;
+
+    console.log(`barcodeData:`, barcodeData);
 
     barcodeData += ' ' + barcodeCheckdigit(barcodeData);
 

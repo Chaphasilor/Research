@@ -1,10 +1,10 @@
-function printLabel(text, amount) {
+function printLabel(text, amount, fontSize) {
   
   if (amount == undefined) {
     amount = 1;
   }
-  
-  createPrintJob(text, amount, 8).then(_ => {
+
+  createPrintJob(text, amount, fontSize).then(_ => {
     uploadPrintJob()
     .catch(err => alert(err));  
   }
@@ -180,6 +180,7 @@ function createQRPrintJob(text, amount, apfel) {
       reject("Something went wrong!")
     }
     if (apfel) {
+      console.log(`text:`, text);
       xhttp.open("GET", "php/createQRCodeFileApfel.php?text="+text+"&amount="+amount, true);
     } else {
       xhttp.open("GET", "php/createQRCodeFile.php?text="+text+"&amount="+amount, true);

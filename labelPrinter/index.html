@@ -35,14 +35,18 @@
         <label for="text">Text:</label>
         <!-- <input type="text" name="text" maxlength="4" size="7"> -->
         <textarea id='taInput' style="resize:none;" name="text" cols="5" rows="3"></textarea>
-        
+        <br>
+        <br>
         <label for="amount">Amount:</label>
         <input type="number" name="amount" value="1">
         <br>
         <br>
+        <label for="textFontSize">Font size:</label>
+        <input type="number" name="fontSize" value="10">
         <br>
         <br>
-        <input type="submit" name="" onclick="printLabel(document.getElementsByName('text')[0].value, document.getElementsByName('amount')[0].value);" value="Print!">
+        <br>
+        <input type="submit" name="" onclick="printLabel(document.getElementsByName('text')[0].value, document.getElementsByName('amount')[0].value, document.querySelector('#single [name=\'fontSize\']').value);" value="Print!">
         
     </form>
 
@@ -79,7 +83,7 @@
         <input type="text" name="text">
         <br>
         <label for="textFontSize">Text font size:</label>
-        <input type="number" name="textFontSize">
+        <input type="number" name="textFontSize" value="10">
         <br>
         <br>
         <br>
@@ -121,22 +125,26 @@
         
     </form>
 
-    <!-- <form id="qrApfel" method="post" onsubmit="event.preventDefault();">
+    <form id="qrApfel" method="post" onsubmit="event.preventDefault();">
         
-      <label for="qrData">Data:</label>
-      <textarea name="qrData" rows="5" cols="45" placeholder="max. ~50 characters"></textarea>
+      <label for="qrData">Static:</label>
+      <input type="text" name="qrData">
+      <br>
+      <label for="qrAmount">Start:</label>
+      <input type="number" name="qrStart" value="1">
+      <br>
+      <label for="qrAmount">End:</label>
+      <input type="number" name="qrEnd" value="1">
+      <br>
+      <br>
+      <br>
+      <br>
+      <input type="submit" name="" onclick="printApfel(document.querySelector('#qrApfel [name=\'qrStart\']').value, document.querySelector('#qrApfel [name=\'qrEnd\']').value, document.querySelector('#qrApfel [name=\'qrData\']').value);" value="Print!">
       
-      <label for="qrAmount">Amount:</label>
-      <input type="number" name="qrAmount" value="1">
-      <br>
-      <br>
-      <br>
-      <br>
-      <input type="submit" name="" onclick="printQRCode(document.querySelector('#qrApfel [name=\'qrData\']').value, document.querySelector('#qrApfel [name=\'qrAmount\']').value, true);" value="Print!">
-      
-    </form> -->
+    </form>
     
     <script src="js/printer.js" charset="utf-8"></script>
+    <script src="apfel.js" charset="utf-8"></script>
     <script src="js/dropdown2.js" charset="utf-8"></script>
     
     <script type="text/javascript">
@@ -144,28 +152,29 @@
       window.onload = function() {
         showSelectedForm();
 
-        document.querySelector('#taInput').onkeypress = (e => { // only catch printable keys
+        // prevent too many characters
+        // document.querySelector('#taInput').onkeypress = (e => { // only catch printable keys
 
-            if (e.keyCode==13) {
+        //     if (e.keyCode==13) {
 
-                if (e.target.value.split('\n').length >= 3) {
-                    console.log('Only three lines allowed!');
-                    alert('Only three lines allowed!');
-                    e.preventDefault();
-                    return false;
-                }
+        //         if (e.target.value.split('\n').length >= 3) {
+        //             console.log('Only three lines allowed!');
+        //             alert('Only three lines allowed!');
+        //             e.preventDefault();
+        //             return false;
+        //         }
 
-            } else {
-                    let lastLine = e.target.value.split('\n').pop();
+        //     } else {
+        //             let lastLine = e.target.value.split('\n').pop();
 
-                    if (lastLine.length >= 5) {
-                        console.log('Max. 5 characters per line!');
-                        alert('Max. 5 characters per line!')
-                        e.preventDefault();
-                        return false;
-                    }
-                }
-        })
+        //             if (lastLine.length >= 5) {
+        //                 console.log('Max. 5 characters per line!');
+        //                 alert('Max. 5 characters per line!')
+        //                 e.preventDefault();
+        //                 return false;
+        //             }
+        //         }
+        // })
         
       }
       
