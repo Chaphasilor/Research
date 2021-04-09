@@ -2,6 +2,7 @@ export class Directory {
 
   constructor(parentDir, dirName) {
 
+    //TODO type checks
     // if (!(parentDir instanceof FileSystemDirectoryHandle)) {
     //   throw new Error(`Argument 'parentDir' has to be of type 'FileSystemDirectoryHandle'! Received type`, typeof parentDir)
     // }
@@ -69,16 +70,5 @@ export class RootDirectory extends Directory {
     return this
 
   }
-  
-
-  // get name() {
-  //   return this.handle.name
-  // }
-
-  // get entries() {
-
-  //   return this.handle.values()
-    
-  // }
   
 }

@@ -3,24 +3,9 @@ import { File } from './file.mjs'
 
 export async function cloneDirectoryFromJSON(parentDir, json) {
 
-  console.log(`json:`, json)
-  
   const parsed = JSON.parse(json)
 
   let clonedRoot = await cloneDirectoryRecursive(parentDir, parsed)
-
-  // for (const subdir of parsed.directories) {
-    
-  //   await new Directory(clonedRoot, subdir.name)
-    
-  // }
-
-  // for (const file of parsed.files) {
-
-  //   const newFile = await new File(clonedRoot, file.name)
-  //   await newFile.writeUrl(file.url)
-    
-  // }
   
 }
 

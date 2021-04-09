@@ -2,6 +2,7 @@ export class File {
 
   constructor(parentDir, fileName) {
 
+    //TODO type checks
     // if (!(parentDir instanceof FileSystemDirectoryHandle)) {
     //   throw new Error(`Argument 'parentDir' has to be of type 'FileSystemDirectoryHandle'! Received type`, typeof parentDir)
     // }
