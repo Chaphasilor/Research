@@ -1,2 +1,6 @@
 labelPrinter/php/job.printjob
 labelPrinter/php/job.printjob
+find-closest-frame/node_modules
+find-closest-frame/frames
+find-closest-frame/input*
+find-closest-frame/*.mp4

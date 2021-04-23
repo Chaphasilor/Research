@@ -1,0 +1,17 @@
+{
+  "name": "find-closest-frame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chaphasilor",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "ffmpeg-extract-frames": "^2.0.2",
+    "pixelmatch": "^5.2.1",
+    "pngjs": "^6.0.0",
+    "resize-img": "^2.0.0"
+  }
+}
