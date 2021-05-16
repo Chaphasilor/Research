@@ -1,5 +1,5 @@
 {
-  "name": "find-closest-frame",
+  "name": "video-sync",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,9 +9,14 @@
   "author": "Chaphasilor",
   "license": "GPL-3.0",
   "dependencies": {
+    "better-logging": "^4.5.0",
+    "bmp-js": "^0.1.0",
+    "dotenv": "^8.2.0",
     "ffmpeg-extract-frames": "^2.0.2",
+    "node-ffprobe": "^3.0.0",
     "pixelmatch": "^5.2.1",
     "pngjs": "^6.0.0",
-    "resize-img": "^2.0.0"
+    "resize-img": "^2.0.0",
+    "ssim.js": "^3.5.0"
   }
 }
