@@ -39,8 +39,6 @@ function matchTracksAndStreams(video2) {
     if (containerize) {
       // track can't be renamed in-place, so create a mkv from it
 
-      //TODO rename tracks with mkvmerge
-      
       try {
         
         await new Promise((resolve, reject) => {
@@ -146,24 +144,28 @@ function matchTracksAndStreams(video2) {
       
     }
 
-    //TODO check if mkvmerge and ffprobe found a different amount of tracks
-
-    let trackInfos = []
+    let matchings = []
     // find ffprobe's stream index and mkvmerge's track id for each audio track found
-    //TODO move getting the track info into a separate function that also returns the track id
     for (const i in audioTracks) {
 
       let trackOffset = containerize ? videoTracks.length : 0
-      let streamIndex = ffprobeInfo.streams.find(stream => stream.tags.title === String(i)).index + trackOffset
+      let foundStream = ffprobeInfo.streams.find(stream => stream.tags.title === String(i))
+
+      // make sure that all tracks found by mkvmerge are also found by ffprobe
+      if (!foundStream) {
+        return reject(new Error(`ffprobe didn't find all tracks found by mkvmerge. Can't automatically match the IDs!`)) // *very* unlikely to happen
+      }
+      let streamIndex = foundStream.index + trackOffset
+      
       let trackInfo = mkvmergeInfo.tracks.find(track => track.properties[`track_name`] === String(i))
+
+      if (!trackInfo) {
+        return reject(new Error(`mkvmerge didn't find some renamed tracks. Aborting!`)) // even more unlikely
+      }
       let trackId = trackInfo.id + trackOffset
       
       console.log(`Audio track #${i} has stream index '${streamIndex}' and track id '${trackId}'`)
-      trackInfos.push({
-        name: mkvmergeOldTrackNames.find(track => track.id === trackId).name,
-        language: trackInfo.properties.language,
-        codec: trackInfo.codec,
-        channels: trackInfo.properties[`audio_channels`],
+      matchings.push({
         ids: {
           ffprobe: streamIndex,
           mkvmerge: trackId,
@@ -172,7 +174,7 @@ function matchTracksAndStreams(video2) {
       
     }
 
-    return resolve(trackInfos)
+    return resolve(matchings)
     
   })
 }
@@ -184,8 +186,39 @@ function needsContainerization(video) {
   return mkvmergeInfo.container.type !== `Matroska`
   
 }
+module.exports.needsContainerization = needsContainerization
+
+function getTrackInfo(video) {
+
+  let mkvmergeInfo
+  
+  // extract info (e.g. track names) from video
+  try {
+    mkvmergeInfo = JSON.parse(execSync(`mkvmerge -J "${video}"`))
+  } catch (err) {
+    console.debug(`mkvmerge error:`, err)
+    throw new Error(`Error with mkvmerge. Is it installed and in your path?`)
+  }
+  let audioTracks = mkvmergeInfo.tracks.filter(track => track.type === `audio`)
+  
+  return audioTracks.map(track => {
+    return {
+      name: track.name,
+      language: track.properties.language,
+      codec: track.codec,
+      channels: track.properties[`audio_channels`],
+      ids: {
+        mkvmerge: track.id,
+      }
+    }
+  })
+
+}
+module.exports.getTrackInfo = getTrackInfo
 
 // matchTracksAndStreams(`/mnt/c/Users/Chaphasilor/Videos/hobbit_1_ee.mp4`)
 matchTracksAndStreams(`/mnt/c/Users/Chaphasilor/Videos/output.mkv`)
 .then(tracks => console.info(`tracks:`, tracks))
 .catch(err => console.error(`ERROR:`, err))
+
+console.log(getTrackInfo(`/mnt/c/Users/Chaphasilor/Videos/output.mkv`))
