@@ -86,6 +86,9 @@ async function startStopwatch() {
     updateMetadata({
       title: `Stopwatch started!`,
       artist: `Stopwatch`,
+      artwork: [
+        { src: `stopwatch.png`, sizes: `512x512`, type: `image/png` },
+      ]
     });
     
     setStopwatchState(`running`)
