@@ -4,13 +4,63 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  
   <title>Wear Controls</title>
 </head>
-<body>
+<body
+  class="p-4 bg-gray-50"
+>
 
-  <button
-    id="start-playback"
-  >Start "Playback"</button>
+  <h2
+    class="text-2xl font-semibold text-gray-900 text-center"
+  >Media API Stopwatch</h2>
+
+  <div
+    class="grid content-center mt-20"
+  >
+
+    <button
+      id="start-stopwatch"
+      class="mx-auto cursor-pointer text-xl bg-white shadow-xl font-semibold text-gray-900 rounded-md p-4"
+    >Start Stopwatch</button>
+
+    <pre
+      id="counter"
+      class="text-4xl h-12 w-full mt-4 font-bold text-gray-900 text-center"
+    >
+
+    </pre>
+
+  </div>
+
+  <p
+    id="output"
+    class="p-4 bg-gray-200 rounded-md mt-10 h-20 overflow-y-auto text-gray-900"
+  >
+
+  </p>
+
+  <div
+    class="p-4 bg-gray-100 rounded-md mt-20 overflow-y-auto text-gray-900"
+  >
+
+    <h2
+      class="text-xl font-semibold text-gray-900"
+    >Usage:</h2>
+  
+    <ul
+      class="list-disc pl-6 mt-4"
+    >
+      <li>Press <span class="font-semibold">[Media Pause]</span> to pause stopwatch</li>
+      <li>Press <span class="font-semibold">[Media Play]</span> to resume stopwatch</li>
+      <li>Press <span class="font-semibold">[Media Next Track]</span> to increment counter stopwatch</li>
+      <li>Press <span class="font-semibold">[Media Previous Track]</span> to decrement counter stopwatch</li>
+      <li>Press <span class="font-semibold">[Media Stop]</span> to stop stopwatch</li>
+    </ul>
+
+  </div>
 
   <!-- <button
     id="start-playback"

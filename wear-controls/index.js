@@ -1,6 +1,8 @@
-const startPlaybackButton = document.querySelector(`#start-playback`)
+const startStopwatchButton = document.querySelector(`#start-stopwatch`)
+const output = document.querySelector(`#output`)
+const counterOutput = document.querySelector(`#counter`)
 
-startPlaybackButton.addEventListener(`click`, startPlayback)
+startStopwatchButton.addEventListener(`click`, startStopwatch)
 
 audioObj = new Audio(`silence.mp3`);
 
@@ -18,6 +20,7 @@ function resumeStopwatch() {
 }
 
 function updateMetadata(data) {
+
   let oldMetadata = navigator.mediaSession.metadata
   navigator.mediaSession.metadata = new MediaMetadata({
     title: data.title || oldMetadata?.title,
@@ -25,6 +28,8 @@ function updateMetadata(data) {
     album: data.album || oldMetadata?.album,
     artwork: data.artwork || oldMetadata?.artwork
   });
+  counterOutput.innerText = navigator.mediaSession.metadata.title
+  
 }
 
 function setStopwatchState(state) {
@@ -33,36 +38,52 @@ function setStopwatchState(state) {
       audioObj.play()
       stopwatch.interval = resumeStopwatch()
       navigator.mediaSession.playbackState = `playing`;
+      updateMetadata({
+        title: stopwatch.counter
+      })
+      output.innerText = `Stopwatch running`
       break;
     case `paused`:
       audioObj.pause()
       clearInterval(stopwatch.interval)
       navigator.mediaSession.playbackState = `paused`;
+      updateMetadata({
+        title: `${navigator.mediaSession.metadata.title} (paused)`
+      })
+      output.innerText = `Stopwatch paused`
       break;
     case `stopped`:
       audioObj.pause()
       clearInterval(stopwatch.interval)
-      navigator.mediaSession.playbackState = `none`;
+      navigator.mediaSession.playbackState = `paused`;
+      stopwatch.counter = 0
+      updateMetadata({
+        title: `Stopped`
+      })
+      output.innerText = `Stopwatch stopped`
       break;
   
     default:
       audioObj.pause()
       clearInterval(stopwatch.interval)
       navigator.mediaSession.playbackState = `none`;
+      startStopwatchButton.innerText = `Stopwatch stopped`
       break;
   }
 }
 
-async function startPlayback() {
+async function startStopwatch() {
   if (`mediaSession` in navigator) {
     
-    console.log(`Starting playback...`);
+    console.log(`Starting stopwatch...`);
     
     await audioObj.play()
     audioObj.loop = true
     console.log(`audioObj:`, audioObj)
 
-    navigator.mediaSession.metadata = new MediaMetadata({
+    setStopwatchState(`stopped`)
+
+    updateMetadata({
       title: `Stopwatch started!`,
       artist: `Stopwatch`,
     });
