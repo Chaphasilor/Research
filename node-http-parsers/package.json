@@ -12,7 +12,7 @@
   "dependencies": {
     "cli-progress": "^3.8.2",
     "node-downloader-helper": "^1.0.15",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "undici": "^3.2.0"
   }
 }
